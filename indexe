@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr" style="font-size: 105%;"> <!-- Ajout du zoom de 5% demandé précédemment -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ainoa Head SPA - Flyer (Police Ubuntu)</title>
+    <style>
+        /* #CSS-Variables #Globales */
+        :root {
+            --primary-color: rgb(227, 95, 18);
+            --secondary-color: #2c2c2c;
+            --light-bg: rgba(255, 255, 255, 0.92);
+            --text-light: rgba(255,255,255,0.9);
+            --text-muted: #666;
+            --text-dark: #2c2c2c;
+            --border-radius-main: 20px;
+            --border-radius-item: 15px;
+            /* #Police-Ubuntu */
+            --font-ubuntu: 'Ubuntu', sans-serif;
+        }
+
+        /* #Importation-Polices-Ubuntu */
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+        /* #Reset-CSS-Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* #Styles-Corps-Page */
+        body {
+            font-family: var(--font-ubuntu); /* Utilisation de la police Ubuntu */
+            /* background-color:; Supprimé ou à remplacer par une valeur valide */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Changed to center for better viewing of fixed size flyer */
+            padding: 20px; /* Increased padding for better viewing */
+            font-weight: 400; /* Poids par défaut pour Ubuntu */
+            background-color: #f0f0f0; /* Added a light bg to see flyer edges */
+        }
+
+        /* #Styles-Conteneur-Flyer */
+        .flyer {
+            width: 15cm; /* MODIFIED: Set fixed width */
+            height: 21cm; /* MODIFIED: Set fixed height */
+            /* width: 100%; REMOVED */
+            /* max-width: 600px; REMOVED */
+            background: var(--light-bg);
+            border-radius: var(--border-radius-main);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.3);
+            overflow: hidden; /* Keeps overall flyer size strict */
+            position: relative;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(227, 95, 18, 0.2);
+            display: flex; /* ADDED: For flex layout of children */
+            flex-direction: column; /* ADDED: Stack children vertically */
+        }
+
+        /* #Styles-Entete */
+        .header {
+            background: var(--primary-color);
+            padding: 5px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0; /* ADDED: Prevent header from shrinking */
+        }
+
+        /* #Animation-Fond-Entete */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: floatBackground 10s linear infinite;
+        }
+
+        /* #Keyframes-Animation-Rotation */
+        @keyframes floatBackground {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* #Styles-Logo */
+        .logo {
+            margin-bottom: 0px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            max-width: 50%;
+            max-height: 53px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+        /* #Styles-Titre-Principal-SPA */
+        .spa-title {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 1.2em; /* Ajusté pour Ubuntu */
+            font-weight: 700; /* Ubuntu Bold */
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: var(--font-ubuntu);
+            flex-shrink: 0; /* ADDED: Prevent title from shrinking */
+        }
+
+        /* #Styles-Section-Services */
+        .services {
+            padding: 10px 15px;
+            background-image: url('https://lh3.googleusercontent.com/d/1NSCj3aRRp0Xbf_DqmMTwPQX35YIxz-ky');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            flex-grow: 1; /* ADDED: Allow services to take available vertical space */
+            overflow-y: auto; /* ADDED: Enable vertical scroll if content overflows */
+            /* z-index needs to be higher than its ::before pseudo-element if children have their own z-index or need to be interactive */
+        }
+
+        /* #Overlay-Transparent-Section-Services */
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.75);
+            z-index: 1; /* Ensures overlay is behind content */
+        }
+
+        /* #Styles-Item-Service */
+        .service-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 245, 242, 0.75) 100%);
+            border-radius: var(--border-radius-item);
+            padding: 5px;
+            margin-bottom: 5px;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 8px 16px rgba(139, 69, 19, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 2; /* Ensures service items are above the overlay */
+        }
+
+        .service-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(139, 69, 19, 0.2);
+        }
+
+        /* #Styles-Nom-Service */
+        .service-name {
+            font-size: 1.3em; /* Ajusté pour Ubuntu */
+            font-weight: 700; /* Ubuntu Bold */
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px; /* Légèrement réduit */
+            font-family: var(--font-ubuntu);
+        }
+
+        /* #Styles-Description-Service */
+        .service-description {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            font-weight: 400; /* Ubuntu Regular */
+        }
+        .service-description em, .service-description strong {
+            color: var(--primary-color);
+            font-style: italic; /* On peut garder l'italique d'Ubuntu */
+            font-weight: 500; /* Ubuntu Medium pour l'emphase */
+        }
+
+        /* #Styles-Details-Service-Grille */
+        .service-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            margin-top: 15px;
+        }
+
+        /* #Styles-Item-Detail-Service */
+        .detail-item {
+            text-align: center;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .detail-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .detail-item:active {
+            transform: translateY(0);
+        }
+
+        /* #Styles-Label-Detail */
+        .detail-label {
+            font-size: 0.75em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            font-weight: 400; /* Ubuntu Regular */
+        }
+
+        /* #Styles-Valeur-Detail */
+        .detail-value {
+            font-weight: 700; /* Ubuntu Bold pour les valeurs */
+            color: var(--primary-color);
+            font-size: 0.95em;
+        }
+
+        /* #Styles-Pied-de-Page */
+        .footer {
+            background: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 5px 20px;
+            font-weight: 400; /* Ubuntu Regular pour le texte du footer */
+            flex-shrink: 0; /* ADDED: Prevent footer from shrinking */
+        }
+
+        /* #Styles-Infos-Contact */
+        .contact-info {
+            font-size: 0.65em;
+            margin-bottom: 2px;
+            line-height: 1;
+        }
+
+        /* #Styles-Liens-Pied-de-Page */
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 200; /* Ubuntu Medium pour les liens */
+        }
+        .footer a:hover {
+            text-decoration: underline;
+            color: var(--primary-color);
+        }
+
+        /* #Styles-Citation-Zen */
+        .zen-quote {
+            font-style: italic; /* Ubuntu Italic */
+            color: var(--primary-color);
+            font-size: 0.5em;
+            margin-top: 1px;
+            font-weight: 400; /* Ubuntu Regular Italic */
+        }
+
+        /* #Styles-Element-Decoratif-Flottant */
+        .decorative-element {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 3;
+        }
+
+        /* #Keyframes-Animation-Pulsation */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* #Media-Queries-Optimisation-Mobile */
+        /* These media queries are based on viewport width. */
+        /* They will still apply if the viewport is small, independently of the flyer's fixed cm size. */
+        /* The content *inside* the 15cm wide flyer might behave like it's on a ~567px screen. */
+        @media (max-width: 480px) {
+            /* Styles below apply if viewport is less than 480px wide */
+            /* For the flyer itself, these won't override the 15cm width */
+            /* but they might affect font sizes if 'em' units are used relative to a base font size changed here */
+            /* However, most font sizes in the flyer are already set with 'em' or fixed values. */
+
+            /* Example: if body font-size was changed in media query, it could affect flyer children */
+            /* body { padding: 5px; } // This applies to body, not flyer directly */
+
+            .header {
+                padding: 15px 10px; /* Reduced padding in header for small screens */
+            }
+
+            .logo img {
+                max-height: 50px; /* Smaller logo on small screens */
+            }
+
+            .spa-title {
+                font-size: 1.5em; /* Slightly smaller title */
+                padding: 10px;
+            }
+
+            .services {
+                padding: 15px 10px;
+            }
+
+            .service-item {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+
+            .service-name {
+                font-size: 1.15em;
+            }
+
+            .service-description {
+                font-size: 0.8em;
+            }
+
+            .service-details {
+                gap: 6px;
+            }
+
+            .detail-item {
+                padding: 7px 5px;
+            }
+
+            .detail-label {
+                font-size: 0.65em;
+            }
+
+            .detail-value {
+                font-size: 0.85em;
+            }
+
+            .footer {
+                padding: 15px 10px;
+            }
+
+            .contact-info {
+                font-size: 0.85em;
+            }
+
+            .zen-quote {
+                font-size: 0.8em;
+            }
+
+            .decorative-element {
+                width: 25px;
+                height: 25px;
+                top: 8px;
+                right: 8px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .service-details {
+                grid-template-columns: 1fr; /* Stack details on very small screens */
+                gap: 5px;
+            }
+
+            .detail-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-align: left;
+                padding: 7px 8px;
+            }
+
+            .detail-label {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- #Conteneur-Principal-Flyer -->
+    <main class="flyer">
+        <!-- #Entete-Flyer -->
+        <header class="header">
+            <div class="decorative-element"></div>
+            <div class="logo">
+                <img src="https://lh3.googleusercontent.com/d/1kwVjBJUuzrJSfOXe0re4Cc4hX0ShEoTf" alt="Ainoa Logo">
+            </div>
+            <div class="subtitle"></div>
+        </header>
+
+        <!-- #Titre-Principal-Service -->
+        <h1 class="spa-title">Head SPA</h1>
+
+        <!-- #Section-Liste-Services -->
+        <section class="services">
+            <!-- #Article-Service-Relaxant -->
+            <article class="service-item">
+                <h2 class="service-name">Soin Relaxant</h2>
+                <div class="service-description">
+                    Shampooing • soin • modelage crânien + épaules, bras et mains
+                </div>
+                <div class="service-details">
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Avec Brushing</div>
+                        <div class="detail-value">75€</div>
+                    </a>
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Temps</div>
+                        <div class="detail-value">70min</div>
+                    </a>
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Sans Brushing</div>
+                        <div class="detail-value">60€</div>
+                    </a>
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Temps</div>
+                        <div class="detail-value">45min</div>
+                    </a>
+                </div>
+            </article>
+
+            <!-- #Article-Service-Profond -->
+            <article class="service-item">
+                <h2 class="service-name">Soin Profond</h2>
+                <div class="service-description">
+                    <em>Traitement personnalisé et relaxant suivant : </em><br>Gommage • shampooing • hydrolat • soin cheveux • modelage crânien • vapeur + modelage des bras et des mains • brushing
+                </div>
+                <div class="service-details">
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Avec Brushing</div>
+                        <div class="detail-value">115€</div>
+                    </a>
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Temps</div>
+                        <div class="detail-value">90min</div>
+                    </a>
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Sans Brushing</div>
+                        <div class="detail-value">100€</div>
+                    </a>
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Temps</div>
+                        <div class="detail-value">60min</div>
+                    </a>
+                </div>
+            </article>
+
+            <!-- #Article-Service-Traitant-Relaxant -->
+            <article class="service-item">
+                <h2 class="service-name">Traitant et Relaxant</h2>
+                <div class="service-description">
+                    <em>Immersion dans une relaxation profonde avec un rituel de 8 étapes :</em><br>
+                    Gommage + scrubber • shampooing • hydrolat • soin cheveux • peigne radio fréquence • modelage crânien • vapeur + modelage des bras et des mains• bain vapeur • modelage visage
+                </div>
+                <div class="service-details">
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Avec Brushing</div>
+                        <div class="detail-value">175€</div>
+                    </a>
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Temps</div>
+                        <div class="detail-value">120min</div>
+                    </a>
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Sans Brushing</div>
+                        <div class="detail-value">160€</div>
+                    </a>
+                    <a href="https://www.planity.com/ainoa-37540-saint-cyr-sur-loire" target="_blank" rel="noopener noreferrer" class="detail-item">
+                        <div class="detail-label">Temps</div>
+                        <div class="detail-value">90min</div>
+                    </a>
+                </div>
+            </article>
+        </section>
+
+        <!-- #Pied-de-Page-Flyer -->
+        <footer class="footer">
+            <div class="contact-info">
+                📞 <a href="tel:0247498729">02 47 49 87 29</a><br>
+                📍 <a href="https://www.google.com/maps/place/A%C3%8FNOA/@47.4104209,0.6772544,17z/data=!3m1!4b1!4m6!3m5!1s0x47fcd50b016f3493:0x2f93239c75503d3b!8m2!3d47.4104209!4d0.6772544!16s%2Fg%2F113flylng?entry=ttu&g_ep=EgoyMDI1MDUxNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">44 Bd Charles de Gaulle, 37540 Saint-Cyr-sur-Loire</a>
+            </div>
+            <div class="zen-quote">
+                "Prenez soin de vous, vous le méritez"
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
